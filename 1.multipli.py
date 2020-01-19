@@ -21,5 +21,5 @@ def table_de(nb, max=10):
 # test intégré
 if __name__ == '__main__':
     table_de(4)
-    input()
+    input()  # hit any key to quit
 
