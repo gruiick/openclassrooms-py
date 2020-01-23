@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
+# $Id: 2.11.py 1241 $
+# SPDX-License-Identifier: BSD-2-Clause
 
 
 chaine = str() # chaîne vide, même résultat que chaine = ""
