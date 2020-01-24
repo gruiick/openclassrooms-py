@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 2.11.py 1241 $
+# $Id $
 # SPDX-License-Identifier: BSD-2-Clause
 
 
