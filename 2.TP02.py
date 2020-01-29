@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id $
+# $Id: 2.TP02.py 1.1 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ Réalisons un pendu

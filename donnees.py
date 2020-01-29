@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id $
+# $Id: donnees.py 1.1 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ Constantes pour le jeu du pendu """

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id $
+# $Id: fonctions.py 1.1 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ fonctions pour le jeu du pendu """
