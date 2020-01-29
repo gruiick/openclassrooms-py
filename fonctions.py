@@ -8,13 +8,39 @@
 
 import random
 import shelve
+import sys
 
 from donnees import *  # plus rapide est le côté obscur
 
 
 def pick_word():
-    """ choisit un mot dans liste """
-    return random.choice(MOTS)
+    """ choisit un mot dans liste 
+    
+    retourne un dict{'lettre': '_', }
+    lettre.UPPER
+    """
+    # chaine = list('test'.upper())
+    mot = random.choice(MOTS)
+    chaine = list(mot.upper())
+    # dico = {lettre: '_' for lettre in chaine}  # attention: les lettres en 
+    # double n'existent plus !
+    dicolist = [{lettre: '_'} for lettre in chaine]
+    return dicolist
+
+
+def compare(dicomot, lettre):
+    """ si lettre est dans dicomot, remplace '_' par lettre 
+
+    dicomot est global ?
+    qu'est-ce que je return ?
+    """
+    for item in dicomot:
+    if lettre in item.keys():
+        item[lettre] = lettre
+        print('youpi')
+    else:
+        print('raté')
+
 
 
 def load_game(fname=None):
@@ -23,12 +49,17 @@ def load_game(fname=None):
     if not fname:
         fname = FICHIER_SCORES
 
-    # TODO/FIXME use try/except
-    with shelve.open(fname, 'r') as savefile:
-        retour = savefile['scores']
-        savefile.close()
+    try:
+        with shelve.open(fname, 'r') as savefile:
+            retour = savefile['scores']
+            savefile.close()
 
-    return retour
+    except IOError:
+        print('Unable to read/load game file: {}'.format(savefile.name))
+        print('Creating new and empty scorefile.')
+
+    finally:
+        return retour
 
 
 def save_game(scores, fname=None):
@@ -38,11 +69,15 @@ def save_game(scores, fname=None):
     if not fname:
         fname = FICHIER_SCORES
 
-    # TODO/FIXME use try/except?
-    with shelve.open(fname, 'n') as savefile:
-        savefile['scores'] = scores
-        savefile.close()
+    try:
+        with shelve.open(fname, 'n') as savefile:
+            savefile['scores'] = scores
+            savefile.close()
+
+    except EnvironmentError as err:
+        print('Environment Error: {} {} {}'.format(err.strerror, str(err.errno), err.filename))
+        sys.exit(1)
 
 
 if __name__ == '__main__':
-    print("Ce fichier est prévu pour être importé pour le jeu du pendu.")
+    print("Ce fichier est prévu pour être importé par le jeu du pendu.")

@@ -36,4 +36,4 @@ MOTS = ["armoire",
        ]
 
 if __name__ == '__main__':
-    print("Ce fichier est prévu pour être importé pour le jeu du pendu.")
+    print("Ce fichier est prévu pour être importé par le jeu du pendu.")

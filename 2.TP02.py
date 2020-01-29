@@ -31,18 +31,24 @@ if __name__ == '__main__':
     """ jouons
     demande nom
         si nom dans score,
+            prendre score existant
         sinon ajoute key à score
-        tant que OK et ESSAI < MAXCOUPS
+            score[key] = 0
+    
+        tant que ROULE et ESSAI < MAXCOUPS
             demande lettre
             si lettre dans mot
-                affiche lettre dans mot
+                affiche mot (lettre découverte)
                     si mot complet
-                        gagné: ajoute score
-                        sauve score
+                        gagné: ajoute score[key]
+                        sauve score[key]
                     sinon: continue
-            sinon: continue
-            perdu, OK = False, sauve score
+            sinon:
+                affiche mot (cache(s))
+
+            perdu, ROULE = False, sauve score[key]
 
     """
+
     while ROULE:
         pass
