@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id $
+# $Id: 1.04.py 1.1 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 entree = input('zyva, un nombre : ')

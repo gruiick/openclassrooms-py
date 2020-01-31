@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id $
+# $Id: 1.ZCasino.py 1.1 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 # Ce fichier abrite le code du ZCasino, un jeu de roulette adapté
