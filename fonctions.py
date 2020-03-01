@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: fonctions.py 1.1 $
+# $Id: fonctions.py 1.2 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ fonctions pour le jeu du pendu """
@@ -35,11 +35,11 @@ def compare(dicomot, lettre):
     qu'est-ce que je return ?
     """
     for item in dicomot:
-    if lettre in item.keys():
-        item[lettre] = lettre
-        print('youpi')
-    else:
-        print('raté')
+        if lettre in item.keys():
+            item[lettre] = lettre
+            print('youpi')
+        else:
+            print('raté')
 
 
 
