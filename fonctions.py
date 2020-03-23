@@ -42,17 +42,30 @@ def compare(dicomot, lettre):
             print('raté')
 
 
+def afficher_scores(dico, personnel=False):
+    """ nicely print the existing scores """
+    if personnel:
+        print('  Votre score personnel')
+    else:
+        print('  Tableau des scores')
+
+    for k, v in dico.items():
+        print('{}: {}'.format(k, v))
+
 
 def load_game(fname=None):
     """ open the previously saved shelve and load the game data """
-    retour = []
+    retour = {}
     if not fname:
         fname = FICHIER_SCORES
 
     try:
-        with shelve.open(fname, 'r') as savefile:
+        with shelve.open(fname) as savefile:
             retour = savefile['scores']
             savefile.close()
+
+    except KeyError:
+        print('new file')
 
     except IOError:
         print('Unable to read/load game file: {}'.format(savefile.name))

@@ -29,6 +29,7 @@ ESSAI = 0
 
 if __name__ == '__main__':
     """ jouons
+    ouvre score
     demande nom
         si nom dans score,
             prendre score existant
@@ -49,6 +50,30 @@ if __name__ == '__main__':
             perdu, ROULE = False, sauve score[key]
 
     """
-
+    print('Jeu du pendu.')
     while ROULE:
-        pass
+        # load score file
+        # scores = {}
+        score = {}
+        scores = fonctions.load_game()
+        if scores:
+            print(scores)
+        else:  # dict is empty
+            print('New game')
+        # ask player's name
+        player = input('Enter player name: ')
+        try:
+            score[player] = scores[player]
+        except KeyError:
+            score = {player: 0}
+
+        fonctions.afficher_scores(score, personnel=True)
+
+        # trichons, mon bon
+        score = {player: 1}
+
+        # checks
+        scores.update(score)
+        fonctions.afficher_scores(scores)
+        fonctions.save_game(scores)
+        ROULE = False
