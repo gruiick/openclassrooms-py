@@ -28,18 +28,38 @@ def pick_word():
     return dicolist
 
 
+def decouvre_lettre(mot, lettre):
+    """ si lettre est dans mot, remplacer '_' par lettre """
+    for l in mot:
+        if lettre.upper() in l.keys():
+            l[lettre] = lettre
+    return mot
+
+
+def affiche_mot(mot):
+    """ affiche les lettres contenues dans le mot, ou '_' """
+    liste = []
+    for lettre in mot:
+        for v in lettre.values():
+            liste.append(v)
+
+    print(' '.join(liste))
+
+
 def compare(dicomot, lettre):
     """ si lettre est dans dicomot, remplace '_' par lettre 
 
     dicomot est global ?
     qu'est-ce que je return ?
     """
+    success = False
     for item in dicomot:
-        if lettre in item.keys():
-            item[lettre] = lettre
-            print('youpi')
+        if lettre.upper() in item.keys():
+            success = True
+            print('youpi!')
         else:
-            print('raté')
+            success = False
+    return success
 
 
 def afficher_scores(dico, personnel=False):
@@ -51,6 +71,7 @@ def afficher_scores(dico, personnel=False):
 
     for k, v in dico.items():
         print('{}: {}'.format(k, v))
+        print('')
 
 
 def load_game(fname=None):
