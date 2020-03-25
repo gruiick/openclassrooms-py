@@ -24,8 +24,8 @@ pendu.py: 2.TP02-pendu.py
 import fonctions
 from donnees import *  # plus rapide est le côté obscur
 
-ROULE = True
-ESSAI = 0
+jouons = True
+essais = MAXCOUPS
 
 
 if __name__ == '__main__':
@@ -61,13 +61,13 @@ if __name__ == '__main__':
     """
     print('Jeu du pendu.')
     # load score file
-    # scores = {}
     score = {}
     scores = fonctions.load_game()
     if scores:
         fonctions.afficher_scores(scores)
     else:  # dict is empty
         print('New game')
+
     # ask player's name
     player = input('Enter player name: ')
     try:
@@ -75,32 +75,36 @@ if __name__ == '__main__':
     except KeyError:
         score = {player: 0}
 
-    fonctions.afficher_scores(score, personnel=True)
+    # fonctions.afficher_scores(score, personnel=True)
 
-    mot = fonctions.pick_word()
+    mot = fonctions.Mot()
+    print(mot.liste)
 
-    while ROULE:
-        while ESSAI < MAXCOUPS:
-            ESSAI += 1
-            fonctions.affiche_mot(mot)
-            lettre = input('Test a letter: ')
-            essai = fonctions.compare(mot, lettre)
-            if essai:
-                print('touchdown')
-                mot = fonctions.decouvre_lettre(mot, lettre)
+    while jouons:
+        while essais > 0:
+
+            mot.affiche()
+            lettre = input('Test a letter: ').upper()
+
+            test_lettre = mot.compare(lettre)
+            if True in test_lettre:
+                print('trouvé')
             else:
-                print('rats!')
+                print('essaie encore')
+            essais -= 1
 
-        fonctions.affiche_mot(mot)
-        lettre = input('Test a letter: ')
-            
-        # fausse fin
-        # trichons, mon bon
-        # score[player] += 1
+            if mot.decouvert:
+                jouons = False
+                break
 
-        ROULE = False
+        if essais == 0:
+            print('Trop tard !')
+            jouons = False
+        else:
+            print('Terminé!')
+            score[player] += essais
 
     # checks
     scores.update(score)
-    # fonctions.afficher_scores(scores)
+    fonctions.afficher_scores(scores)
     fonctions.save_game(scores)

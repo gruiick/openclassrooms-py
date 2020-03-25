@@ -13,53 +13,86 @@ import sys
 from donnees import *  # plus rapide est le côté obscur
 
 
-def pick_word():
-    """ choisit un mot dans liste 
-    
-    retourne un dict{'lettre': '_', }
-    lettre.UPPER
-    """
-    # chaine = list('test'.upper())
-    mot = random.choice(MOTS)
-    chaine = list(mot.upper())
-    # dico = {lettre: '_' for lettre in chaine}  # attention: les lettres en 
-    # double n'existent plus !
-    dicolist = [{lettre: '_'} for lettre in chaine]
-    return dicolist
+class Mot():
+    """ liste de dictionnaires spécialisés, contenant chacun une lettre """
+    def __init__(self):
+        self.liste = self.pick_word()
+        self.essais = []
 
+    def __iter__(self):
+        """
+            Est appelé quand on fait un iter(objet), en particulier, cela
+            arrive à chaque boucle for.
+            La valeur retournée doit être un iterateur.
+            En général on retourne une valeur retournée par iter()
+        """
+        return iter(self.liste)
 
-def decouvre_lettre(mot, lettre):
-    """ si lettre est dans mot, remplacer '_' par lettre """
-    for l in mot:
-        if lettre.upper() in l.keys():
-            l[lettre] = lettre
-    return mot
+    def __len__(self):
+        """
+            Est appelé quand on fait len() sur l'objet.
+            Utile pour donner une longeur à un objet
+        """
+        return len(self.liste)
 
+    def pick_word(self):
+        """ choisit un mot dans la liste MOTS
 
-def affiche_mot(mot):
-    """ affiche les lettres contenues dans le mot, ou '_' """
-    liste = []
-    for lettre in mot:
-        for v in lettre.values():
-            liste.append(v)
+        retourne une liste de dict{'lettre': '_', }
+        lettre.UPPER
+        """
+        mot = random.choice(MOTS)
+        chaine = list(mot.upper())
+        # dico = {lettre: '_' for lettre in chaine}  # attention: les lettres en 
+        # double n'existent plus !
+        dicolist = [{lettre: '_'} for lettre in chaine]
+        return dicolist
 
-    print(' '.join(liste))
+    def decouvre_lettre(self, lettre):
+        """ si lettre est dans mot, remplacer '_' par lettre """
+        for l in self.liste:
+            if lettre in l.keys():
+                l[lettre] = lettre
 
-
-def compare(dicomot, lettre):
-    """ si lettre est dans dicomot, remplace '_' par lettre 
-
-    dicomot est global ?
-    qu'est-ce que je return ?
-    """
-    success = False
-    for item in dicomot:
-        if lettre.upper() in item.keys():
-            success = True
-            print('youpi!')
+    @property
+    def decouvert(self):
+        """ si '_' n'est plus dans mot(lettre) => success """
+        lettre = '_'
+        success = []
+        for l in self.liste:
+            if lettre in l.values():
+                success.append(True)
+            else:
+                success.append(False)
+        if True in success:
+            return False
         else:
-            success = False
-    return success
+            return True
+
+    def affiche(self):
+        """ affiche les lettres contenues dans le mot, ou '_' """
+        liste = []
+        for l in self.liste:
+            for v in l.values():
+                liste.append(v)
+        print(' '.join(liste))
+
+    def compare(self, lettre):
+        """ find if lettre is part of self.liste """
+        success = []
+        if lettre in self.essais:
+            print('déjà testée !')
+            success.append(False)
+            return success
+        else:
+            self.essais.append(lettre)
+            for l in self.liste:
+                if lettre in l.keys():
+                    self.decouvre_lettre(lettre)
+                    success.append(True)
+                else:
+                    success.append(False)
+        return success
 
 
 def afficher_scores(dico, personnel=False):
@@ -75,7 +108,7 @@ def afficher_scores(dico, personnel=False):
 
 
 def load_game(fname=None):
-    """ open the previously saved shelve and load the game data """
+    """ open the previously saved shelve, if exist, and load the game data """
     retour = {}
     if not fname:
         fname = FICHIER_SCORES
