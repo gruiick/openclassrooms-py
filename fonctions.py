@@ -9,6 +9,7 @@
 import random
 import shelve
 import sys
+import distutils.util
 
 from donnees import *  # plus rapide est le côté obscur
 
@@ -28,13 +29,6 @@ class Mot():
         """
         return iter(self.liste)
 
-    def __len__(self):
-        """
-            Est appelé quand on fait len() sur l'objet.
-            Utile pour donner une longeur à un objet
-        """
-        return len(self.liste)
-
     def pick_word(self):
         """ choisit un mot dans la liste MOTS
 
@@ -43,8 +37,8 @@ class Mot():
         """
         mot = random.choice(MOTS)
         chaine = list(mot.upper())
-        # dico = {lettre: '_' for lettre in chaine}  # attention: les lettres en 
-        # double n'existent plus !
+        # dico = {lettre: '_' for lettre in chaine}  # attention:
+        # avec -^, les lettres en double n'existent plus !
         dicolist = [{lettre: '_'} for lettre in chaine]
         return dicolist
 
@@ -104,7 +98,7 @@ def afficher_scores(dico, personnel=False):
 
     for k, v in dico.items():
         print('{}: {}'.format(k, v))
-        print('')
+    print('')
 
 
 def load_game(fname=None):
@@ -144,6 +138,22 @@ def save_game(scores, fname=None):
     except EnvironmentError as err:
         print('Environment Error: {} {} {}'.format(err.strerror, str(err.errno), err.filename))
         sys.exit(1)
+
+
+def query_yesno(question):
+    """ Ask a yes/no question via input() and return 1 (True) if yes,
+    0 (False) elsewhere.
+
+    No default.
+
+    import distutils.util
+    """
+    print('\n' + question + ' [y/n]?')
+    while True:
+        try:
+            return distutils.util.strtobool(input().lower())
+        except ValueError:
+            print('Please reply "y" or "n".')
 
 
 if __name__ == '__main__':
