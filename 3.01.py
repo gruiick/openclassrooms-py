@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.01.py 1.2 $
+# $Id: 3.01.py 1.3 $
 # SPDX-License-Identifier: BSD-2-Clause
 
-""" classe, attribut, méthode, classmethod, staticmethod """
+""" classe, attribut, méthode, classmethod, staticmethod, conventions """
 
 
 class Personne:
