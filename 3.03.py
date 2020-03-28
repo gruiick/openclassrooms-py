@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.03.py 1.1 $
+# $Id: 3.03.py 1.2 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ méthodes spéciales et conventions """
@@ -100,3 +100,47 @@ class Protege:
         raise AttributError("Vous ne pouvez pas supprimer d'attribut dans cette Classe.")
         # ici aussi, pour vraiment supprimer un attribut, il faudra utiliser la méthode object.__delattr__(self, nom_attr) .
 
+    def __contains__(self, valeur):
+        """ permet l'usage du mot-clef 'in' sur l'objet, return True/False """
+        for v in self.__dict__.values():
+            if v == valeur:
+                return True
+            else:
+                print('nope')
+                return False
+
+    def __len__(self):
+        """ renvoie la quantité entière : len(objet) """
+        compteur = 0
+        for item in self.__dict__:
+            compteur += 1
+        return int(compteur)
+
+
+class ZDict:
+    """ classe 'enveloppe' d'un dictionnaire """
+
+    def __init__(self):
+        """ notre classe n'accepte aucun paramètre """
+
+        self._dictionnaire = {}
+
+    def __getitem__(self, index):
+        """ méthode spéciale, appelée quand objet[index], redirige
+        vers self._dictionnaire[index] """
+        # un petit try, avec except KeyError:
+
+        return self._dictionnaire[index]
+
+    def __setitem__(self, index, valeur):
+        """ méthode spéciale, appellée quand objet[index] = valeur,
+        redirige vers self._dictionnaire[index] = valeur 
+        return None """
+
+        self._dictionnaire[index] = valeur
+
+    def __delitem__(self, index):
+        """ méthode spéciale, appellée quand del objet[index] 
+        return None """
+
+        del self._dictionnaire[index]
