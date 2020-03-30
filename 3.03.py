@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.03.py 1.2 $
+# $Id: 3.03.py 1.3 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ méthodes spéciales et conventions """
@@ -144,3 +144,107 @@ class ZDict:
         return None """
 
         del self._dictionnaire[index]
+
+
+class Duree:
+    """ contient des durées, sous forme nombre de minutes et de
+    secondes """
+
+    def __init__(self, min=0,sec=0):
+        """ constructeur avec valeurs par défaut """
+        self.min = min
+        self.sec = sec
+
+    def __str__(self):
+        """ affichage un peu joli """
+        return '{0:02}:{1:02}'.format(self.min, self.sec)
+
+    def __add__(self, objet_a_ajouter):
+        """ l'objet a ajouter est un entier, le nombre de secondes.
+        On retourne le résultat, sans modifier l'objet lui-même """
+        nouvelle_duree = Duree()
+        # on copie self dans le nouvel objet
+        nouvelle_duree.min = self.min
+        nouvelle_duree.sec = self.sec
+        # on ajoute la nouvelle durée
+        nouvelle_duree.sec += objet_a_ajouter
+        # et on gère la base 60
+        if nouvelle_duree.sec >= 60:
+            nouvelle_duree.min += nouvelle_duree.sec // 60
+            nouvelle_duree.sec = nouvelle_duree.sec % 60
+        # et on renvoie la nouvelle durée
+        return nouvelle_duree
+
+    def __radd__(self, objet_a_ajouter):
+        """ utilisée si on fait 4 + objet, renvoie sur __add__,
+        dans le bon sens """
+        return self + objet_a_ajouter
+
+    def __iadd__(self, objet_a_ajouter):
+        """ l'objet a ajouter est un entier, le nombre de
+        secondes. Cette fois-ci, on travaille directement sur
+        l'objet directement """
+        self.sec += objet_a_ajouter
+        if self.sec >= 60:
+            self.min += self.sec // 60
+            self.sec = self.sec % 60
+        return self
+
+    def __eq__(self, autre_duree):
+        """ test si self et autre_duree sont égales """
+        return self.sec == autre_duree.sec and self.min == autre_duree.min
+
+    def __gt__(self, autre_duree):
+        """ test si self > autre_duree """
+        nb_sec1 = self.sec + self.min * 60
+        nb_sec2 = autre_duree.sec + autre_duree.min * 60
+        return nb_sec1 > nb_sec2
+
+
+    """
+     == | def __eq__(self, objet_a_comparer):
+
+    Opérateur d'égalité (equal). Renvoie True si self et objet_a_comparer sont égaux, False sinon.
+
+     != | def __ne__(self, objet_a_comparer):
+
+    Différent de (non equal). Renvoie True si self et objet_a_comparer sont différents, False sinon.
+
+     > | def __gt__(self, objet_a_comparer):
+
+    Teste si self est strictement supérieur (greater than) à objet_a_comparer.
+
+     >= | def __ge__(self, objet_a_comparer):
+
+    Teste si self est supérieur ou égal (greater or equal) à objet_a_comparer.
+
+     < | def __lt__(self, objet_a_comparer):
+
+    Teste si self est strictement inférieur (lower than) à objet_a_comparer.
+
+     <= | def __le__(self, objet_a_comparer):
+
+    Teste si self est inférieur ou égal (lower or equal) à objet_a_comparer.
+
+    """
+
+
+class Temp:
+    """ contient plusieurs attributs, dont un temporaire """
+    def __init__(self):
+        """ """
+        self.attribut_1 = "une valeur"
+        self.attribut_2 = "deux valeurs"
+        self.attribut_temporaire = 5
+
+    def __getstate__(self):
+        """ renvoie le dictionnaire d'attributs à sérialiser """
+        # s'il n'y a pas cette méthode, pickle enregistre self.__dict__ directement
+        dict_attr = dict(self.__dict__)
+        dict_attr['attribut_temporaire'] = 0
+        return dict_attr
+
+    def __setstate__(self, dict_attr):
+        """ appelée à la fin de la désérialisation de l'objet """
+        dict_attr['attribut_temporaire'] = 0
+        self.__dict__ = dict_attr
