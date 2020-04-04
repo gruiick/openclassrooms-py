@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.04.py 1.3 $
+# $Id: 3.04.py 1.4 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ tri(s) """
 
 prenoms = ['Laetitia', 'Marguerite', 'Toscane', 'Lucie', 'Maxime', 'Célestine', 'Fanélie', 'Lucienne', 'Sancie', 'Modeste', 'Sidonie', 'Danielle', 'Cassandre', 'Madeleine', 'Eugénie', 'Bethsabée', 'Amélie', 'Jacqueline', 'Josie', 'Abelle']
 
-# prenoms.sort()  # méthode de liste, la liste est trié, l'ordre en est odifié
+# prenoms.sort()  # méthode de liste, la liste est triée, l'ordre en est modifié
 
-# sorted(prenoms)  # méthode 'builtin' : retourne une copie triée de n'importe quel itérable
+# sorted(prenoms)  # méthode 'builtin' python : retourne une copie triée de n'importe quel itérable
 
 etudiants1 = [
     # Prénom, age, moyenne
