@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.03.py 1.3 $
+# $Id: 3.03.py 1.4 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ méthodes spéciales et conventions """
@@ -106,7 +106,7 @@ class Protege:
             if v == valeur:
                 return True
             else:
-                print('nope')
+                # print('nope')
                 return False
 
     def __len__(self):
