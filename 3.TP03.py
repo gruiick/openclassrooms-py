@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.TP03.py 1.5 $
+# $Id: 3.TP03.py 1.6 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 
@@ -101,8 +101,7 @@ class DicOrdonne(dict):
             del self._clefs[index]
 
     def __add__(self, objet_a_ajouter):
-        """ return result """
-        # add after (self_.clefs, self._valeurs) to new.lists
+        """ return new (self + added) """
         # TypeError ?
         if type(objet_a_ajouter) is not type(self):
             raise TypeError('cannot add {} and {}'.format(type(self), type(objet_a_ajouter)))
@@ -118,14 +117,20 @@ class DicOrdonne(dict):
             return nouveau
 
     def __radd__(self, objet_a_ajouter):
-        """ reverse add (something + objet) """
-        # same from add, but reverse?
-        pass
+        """ inverse add (something + objet) """
+        # same from add, but inverse
+        if type(objet_a_ajouter) is not type(self):
+            raise TypeError('cannot add {} and {}'.format(type(self), type(objet_a_ajouter)))
 
-    def __iadd__(self, objet_a_ajouter):
-        """ internal add, return None """
-        # add to self._clefs, self._valeurs
-        pass
+        else:
+            nouveau = DicOrdonne()
+            # d'abord objet_a_ajouter, puis self
+            for cle, valeur in objet_a_ajouter.items():
+                nouveau[cle] = valeur
+            for cle, valeur in self.items():
+                nouveau[cle] = valeur
+
+            return nouveau
 
     def items(self):
         """ générateur retournant les couples (clé, valeur) """
@@ -143,7 +148,12 @@ class DicOrdonne(dict):
 
     def reverse(self):
         """ Inverse le contenu du dictionnaire """
-        pass
+        position = len(self._clefs)
+        nouveau = DicOrdonne()
+        print(position)
+        """ je sais que c'est simple, la solution est dans 3.06
+        mais j'ai le cerveau embué par les pollens... """
+
 
     def sort(self):
         """ Tri le contenu du dictionnaire """
