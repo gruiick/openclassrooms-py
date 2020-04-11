@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 3.TP03.py 1.6 $
+# $Id: 3.TP03.py 1.7 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 
@@ -117,7 +117,7 @@ class DicOrdonne(dict):
             return nouveau
 
     def __radd__(self, objet_a_ajouter):
-        """ inverse add (something + objet) """
+        """ inverse add (something + self) """
         # same from add, but inverse
         if type(objet_a_ajouter) is not type(self):
             raise TypeError('cannot add {} and {}'.format(type(self), type(objet_a_ajouter)))
@@ -148,13 +148,26 @@ class DicOrdonne(dict):
 
     def reverse(self):
         """ Inverse le contenu du dictionnaire """
-        position = len(self._clefs)
-        nouveau = DicOrdonne()
-        print(position)
-        """ je sais que c'est simple, la solution est dans 3.06
-        mais j'ai le cerveau embué par les pollens... """
+        # on a pas besoin de la position:
+        # parcours et .insert() toujours au début de la nouvelle liste
+        clefs = []
+        valeurs = []
+        for k, v in self.items():
+            clefs.insert(0, k)
+            valeurs.insert(0, v)
 
+        self._clefs = clefs
+        self._valeurs = valeurs
 
     def sort(self):
         """ Tri le contenu du dictionnaire """
-        pass
+        # tri les clefs avec sorted()
+        clefs_triees = sorted(self._clefs)
+        # puis valeurs_triées.append(), dans l'ordre de clefs_triées
+        # enregistre clefs_triées, valeurs_triées
+        valeurs_triees = []
+        for cle in clefs_triees:
+            valeurs_triees.append(self[cle])
+
+        self._clefs = clefs_triees
+        self._valeurs = valeurs_triees
