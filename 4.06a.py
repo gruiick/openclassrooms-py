@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# $Id: 4.06.py 1.2 $
+# $Id: 4.06a.py 1.3 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 """ Réseau (TCP) """
