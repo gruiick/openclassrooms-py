@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# PSMN: $Id: 02.py 1310 $
+# PSMN: $Id: 02.py 1.3 $
 # SPDX-License-Identifier: CECILL-B OR BSD-2-Clause
 
 """ https://github.com/OpenClassrooms-Student-Center/demarrez_votre_projet_avec_python/
