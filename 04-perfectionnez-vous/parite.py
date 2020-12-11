@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 #
-# $Id: parite.py 1.2 $
+# $Id: parite.py 1.3 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 import argparse
@@ -15,11 +15,13 @@ def main():
     # import pdb; pdb.set_trace()
 
     if args.verbose:
-        log.basicConfig(level=log.DEBUG)
+        """ log is WARN by default """
+        # (debug|info|warn|error|critical)
+        log.basicConfig(level=log.INFO)
 
     try:
         datafile = args.datafile
-        if datafile == None:
+        if datafile == None:  # redondant avec '-f'
             raise Warning("Please provide a datafile!")
         else:
             try:
