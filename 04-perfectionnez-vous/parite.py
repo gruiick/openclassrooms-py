@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 #
-# $Id: parite.py 1.4 $
+# $Id: parite.py 1.5 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 import argparse
@@ -23,32 +23,40 @@ def main():
         datafile = args.datafile
         if datafile == None:  # redondant avec '-f'
             raise Warning("Please provide a datafile!")
-        else:
-            try:
-                if args.extension == 'csv':
-                    # csv.launch_analysis('current_mps.csv')
-                    csv.launch_analysis(datafile, info=args.info)
-                elif args.extension == 'xml':
-                    # xml.launch_analysis('SyseronBrut.xml')
-                    xml.launch_analysis(datafile)
-
-            except FileNotFoundError as e:
-                log.error("File not found:", e)
-
-            finally:
-                log.info("### analysis done ###")
 
     except Warning as e:
         # print(e)
         log.warning(e)
 
+    else:
+        if args.extension == 'csv':
+            # csv.launch_analysis('current_mps.csv')
+            csv.launch_analysis(datafile,
+                                byparty=args.byparty,
+                                info=args.info,
+                                displaynames=args.displaynames,
+                                searchname=args.searchname,
+                                index=args.index,
+                                groupfirst=args.groupfirst)
+        elif args.extension == 'xml':
+            # xml.launch_analysis('SyseronBrut.xml')
+            xml.launch_analysis(datafile)
+
+    finally:
+        log.info("### analysis done ###")
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-e', '--extension', help="""Type of file to analyse [csv|xml]?""")
     parser.add_argument('-f', '--datafile', help="File to analyse")
+    parser.add_argument('-e', '--extension', help="""Type of file to analyse [csv|xml]?""")
     parser.add_argument('-v', '--verbose', action='store_true', help="add verbosity")
-    parser.add_argument('-i', '--info', action='store_true', help="""information about the file""")
+    parser.add_argument('-i', '--info', action='store_true', help="information about the file")
+    parser.add_argument('-p', '--byparty', action='store_true', help="display graph for each political party")
+    parser.add_argument('-n', '--displaynames', action='store_true', help="display names of all MPs")
+    parser.add_argument('-s', '--searchname', help="search for a MP name")
+    parser.add_argument('-I', '--index', help="displays information about Ith MP")
+    parser.add_argument('-g', '--groupfirst', help="displays a graph grouping all the 'g' biggest political parties")
 
     return parser.parse_args()
 
