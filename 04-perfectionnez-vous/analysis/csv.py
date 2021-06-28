@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 #
-# $Id: csv.py 1.2 $
+# $Id: csv.py 1.3 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 # import os
@@ -77,6 +77,17 @@ class SetOfParliamentMembers:
         if attr == 'number_of_mps':
             raise Exception('You cannot set the number of MPs yourself!')
         self.__dict__[attr] = value
+
+    def __iter__(self):
+        self.iterator_state = 0
+        return self
+
+    def __next__(self):
+        if self.iterator_state >= len(self):
+            raise StopIteration()
+        result = self[self.iterator_state]
+        self.iterator_state += 1
+        return result
 
     def data_from_csv(self, csv_file):
         self.dataframe = pd.read_csv(csv_file, sep=';')
@@ -166,4 +177,5 @@ def launch_analysis(data_file, byparty=False, info=False, displaynames=False, se
 
 if __name__ == '__main__':
     """ """
-    launch_analysis('current_mps.csv', by_party=True)
+    launch_analysis('current_mps.csv', byparty=True)
+
