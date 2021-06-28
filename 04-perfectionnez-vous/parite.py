@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 #
-# $Id: parite.py 1.3 $
+# $Id: parite.py 1.4 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 import argparse
@@ -27,7 +27,7 @@ def main():
             try:
                 if args.extension == 'csv':
                     # csv.launch_analysis('current_mps.csv')
-                    csv.launch_analysis(datafile)
+                    csv.launch_analysis(datafile, info=args.info)
                 elif args.extension == 'xml':
                     # xml.launch_analysis('SyseronBrut.xml')
                     xml.launch_analysis(datafile)
@@ -48,6 +48,7 @@ def parse_arguments():
     parser.add_argument('-e', '--extension', help="""Type of file to analyse [csv|xml]?""")
     parser.add_argument('-f', '--datafile', help="File to analyse")
     parser.add_argument('-v', '--verbose', action='store_true', help="add verbosity")
+    parser.add_argument('-i', '--info', action='store_true', help="""information about the file""")
 
     return parser.parse_args()
 
