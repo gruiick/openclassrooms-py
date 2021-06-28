@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # coding: utf-8
 #
-# $Id: parite.py 1.5 $
+# $Id: parite.py 1.6 $
 # SPDX-License-Identifier: BSD-2-Clause
 
 import argparse
 import logging as log
+import re
 
 from analysis import csv, xml
 
@@ -29,7 +30,10 @@ def main():
         log.warning(e)
 
     else:
-        if args.extension == 'csv':
+        e = re.search(r'^.+\.(\D{3})$', args.datafile)
+        extension = e.group(1)
+
+        if extension == 'csv':
             # csv.launch_analysis('current_mps.csv')
             csv.launch_analysis(datafile,
                                 byparty=args.byparty,
@@ -38,7 +42,7 @@ def main():
                                 searchname=args.searchname,
                                 index=args.index,
                                 groupfirst=args.groupfirst)
-        elif args.extension == 'xml':
+        elif extension == 'xml':
             # xml.launch_analysis('SyseronBrut.xml')
             xml.launch_analysis(datafile)
 
@@ -49,7 +53,7 @@ def main():
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--datafile', help="File to analyse")
-    parser.add_argument('-e', '--extension', help="""Type of file to analyse [csv|xml]?""")
+    # parser.add_argument('-e', '--extension', help="""Type of file to analyse [csv|xml]?""")
     parser.add_argument('-v', '--verbose', action='store_true', help="add verbosity")
     parser.add_argument('-i', '--info', action='store_true', help="information about the file")
     parser.add_argument('-p', '--byparty', action='store_true', help="display graph for each political party")
